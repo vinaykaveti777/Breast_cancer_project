@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Breast Cancer Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #009578;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Breast Cancer Prediction App</h1>
+    <p><strong>Model Accuracy:</strong> {{ accuracy }}%</p>
+
+    <form method="post" action="/predict">
+        {% for feature in [
+            'mean radius', 'mean texture', 'mean perimeter', 'mean area', 'mean smoothness',
+            'mean compactness', 'mean concavity', 'mean concave points', 'mean symmetry', 'mean fractal dimension',
+            'radius error', 'texture error', 'perimeter error', 'area error', 'smoothness error',
+            'compactness error', 'concavity error', 'concave points error', 'symmetry error', 'fractal dimension error',
+            'worst radius', 'worst texture', 'worst perimeter', 'worst area', 'worst smoothness',
+            'worst compactness', 'worst concavity', 'worst concave points', 'worst symmetry', 'worst fractal dimension'
+        ] %}
+        <label>{{ feature }}</label><br>
+        <input type="number" step="any" min="0" max="10000" name="{{ feature }}" required><br>
+        {% endfor %}
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+    <div class="result" style="color: {% if result == 'Benign' %}green{% else %}red{% endif %};">
+        Prediction: {{ result }}
+    </div>
+    {% endif %}
+</body>
+</html>
